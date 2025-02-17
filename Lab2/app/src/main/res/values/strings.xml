@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TaskManager</string>
+
+    <string name="task_1">Go to class</string>
+    <string name="task_2">Clone my repo</string>
+    <string name="task_3">Add a README</string>
+    <string name="task_4">Go to class</string>
+    <string name="task_5">Feed the cat</string>
+
+    <string name="text_field_label">Enter task</string>
+    <string name="button_add_task">Add Task</string>
+
 </resources>
