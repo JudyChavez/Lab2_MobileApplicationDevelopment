@@ -20,15 +20,25 @@ var taskIdCounter = 0 //initializes id counter
 
 
 
-// List of tasks and the information that you will use as the data in your app.
+// Seeded data for testing, List of tasks and the information that you will use as the data in your app.
 class Datasource() {
     fun loadTasks(): List<Task> {
         return mutableStateListOf<Task>(
             Task(id = taskIdCounter++, taskDescription = "Datasource - Test 1", false),
             Task(id = taskIdCounter++, taskDescription = "Datasource - Test 2", false),
-//            Task(id = taskIdCounter++, R.string.task_3, true),
-//            Task(id = taskIdCounter++, R.string.task_4, true),
-            //Task(id = taskIdCounter++, R.string.task_5, true)
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 3", true),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 4", true),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 5", true),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 6", false),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 7", false),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 8", true),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 9", true),
+            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 10", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 1", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 2", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 3", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 4", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 5", true)
 
         )
     }
