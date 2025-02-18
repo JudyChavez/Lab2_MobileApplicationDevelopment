@@ -18,10 +18,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -63,7 +67,8 @@ fun MainScreen() {
     var taskInput by remember { mutableStateOf("") }
     var taskList = remember { mutableStateListOf<Task>() }
 
-    if (taskList.isEmpty())
+
+    if (taskList.isEmpty()) //initialize list if empty
     {
         taskList.addAll(Datasource().loadTasks()) // Initialize the task list using the Datasource
     }
@@ -97,13 +102,20 @@ fun MainScreen() {
         Row() {
             TaskList(
                 taskList = taskList, //Datasource().loadTasks() //display task list
-                onDelete = { task -> taskList.remove(task) } //removes task from taskList
+                onDelete = { task -> taskList.remove(task) }, //removes task from taskList
+                onCheckboxChange = { task, isChecked ->
+                    // Update the task's checkbox state and trigger recomposition
+                    val index = taskList.indexOf(task)
+                    if (index != -1) {
+                        taskList[index] =
+                            task.copy(checkboxIsCompleted = isChecked) // Update task state
+                    }
+                }
+                //onCheckboxChange = { task, isCompleted -> task.checkboxIsCompleted = isCompleted }
             )
         }
     }
 }
-
-
 
 //Composable for the TextField and "Add Task" button.
 @Composable
@@ -137,16 +149,29 @@ fun TaskInputField(
 @Composable
 fun TaskItem(
         task: Task,
-        onDelete: () -> Unit
+        onDelete: () -> Unit,
+        onCheckboxChange: (Boolean) -> Unit,
+        modifier: Modifier = Modifier
 ) {
+
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
     ) {
+
+        //checkbox icon original
+        Checkbox(
+            checked = task.checkboxIsCompleted,
+            onCheckedChange = { isChecked -> onCheckboxChange(isChecked) }
+        )
+
+
+        //description
         Text(
             text = task.taskDescription, //displays taskDescription text.
             modifier = Modifier
                 .padding(8.dp)
             )
+
 
         //delete icon button
         IconButton(
@@ -160,28 +185,26 @@ fun TaskItem(
     }
 }
 
+
+
 //Composable for displaying the list of tasks.
 @Composable
 fun TaskList(
         taskList: List<Task>,
         onDelete: (Task) -> Unit,
+        onCheckboxChange: (Task, Boolean) -> Unit,
         modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = Modifier) {
         items(taskList) { task ->
             TaskItem(
                 task = task,
-                onDelete = { onDelete(task) }
+                onDelete = { onDelete(task) },
+                onCheckboxChange = { isChecked -> onCheckboxChange(task, isChecked) }
             )
         }
     }
 }
-
-
-
-
-
-
 
 @Preview(showBackground = true)
 @Composable

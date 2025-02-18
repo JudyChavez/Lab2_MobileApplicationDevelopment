@@ -10,4 +10,6 @@
     <string name="text_field_enter_task_label">Enter task</string>
     <string name="button_add_task_label">Add Task</string>
 
+    <string name="checkbox_content_description">Checkbox</string>
+
 </resources>

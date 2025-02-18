@@ -13,10 +13,11 @@ import com.example.taskmanager.R
 data class Task(
     val id: Int,
     val taskDescription: String,    //@StringRes val taskDescription: Int,
-    var checkboxIsCompleted: Boolean = false //complete or not complete.
+    var checkboxIsCompleted: Boolean //complete or not complete.
 )
 
 var taskIdCounter = 0 //initializes id counter
+
 
 
 // List of tasks and the information that you will use as the data in your app.
