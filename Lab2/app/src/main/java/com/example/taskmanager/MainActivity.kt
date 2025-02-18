@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.DefaultTab.PhotosTab.value
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -45,87 +47,115 @@ class MainActivity : ComponentActivity() {
         setContent {
             TaskManagerTheme {
                 //Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TaskManagerLayout(
-
+                    MainScreen(
                     )
                 }
         }
     }
 }
 
+//Entry point composable.
 @Composable
-fun TaskManagerLayout() {
+fun MainScreen() {
     var taskInput by remember { mutableStateOf("") }
-    val taskList = remember { mutableStateListOf<Task>() }
+    var taskList = remember { mutableStateListOf<Task>() }
+
+    if (taskList.isEmpty())
+    {
+        taskList.addAll(Datasource().loadTasks()) // Initialize the task list using the Datasource
+    }
 
     Column() {
         Row() {
-            AddTaskField(
-                label = R.string.text_field_label,  // Pass the string resource ID
+            TaskInputField(
+                label = R.string.text_field_enter_task_label,  // Pass the string resource ID
                 keyboardOptions = KeyboardOptions.Default,
                 value = taskInput,
                 onValueChange = { taskInput = it }, // Update taskInput state when text changes
-                modifier = Modifier.padding(16.dp)
-            )
-
-            TaskButton(
                 onClick = {
-                    if (taskInput.isNotBlank()) {
-                        // Add new task to the list
-                        val newTask = Task(id = taskList.size, taskDescription = taskIdCounter)
-                        taskList.add(newTask)
-                        taskInput = "" // Clear the input field
-                    }
-                }
+                    if (
+                        taskInput.isNotBlank()
+                        ) {
+                            // Add new task to the list
+                            val newTask =
+                                Task(
+                                    id = taskList.size,
+                                    taskDescription = taskInput,
+                                    false
+                                )
+                            taskList.add(newTask)
+                            taskInput = "" //resets input field
+                        }
+                },
+                modifier = Modifier.padding(16.dp)
             )
         }
 
         Row() {
-        TaskList(taskList = Datasource().loadTasks())
+            TaskList(
+                taskList = taskList //Datasource().loadTasks() //display task list
+            )
         }
     }
 }
 
+
+
+//Composable for the TextField and "Add Task" button.
 @Composable
-fun AddTaskField(
+fun TaskInputField(
     //stateless composable function
     @StringRes label: Int, //To denote that the label parameter is expected to be a string resource reference, annotate the function parameter with the @StringRes annotation
     keyboardOptions: KeyboardOptions,
     value: String,
     onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TextField(
         value = value,
-        onValueChange = { /*TODO */ },//onValueChange,
-        label = { Text(stringResource(label)) },
+        onValueChange = onValueChange,
+        label = { Text(stringResource(label)) }, //text field: enter task label
         keyboardOptions = keyboardOptions,
         modifier = modifier
     )
-}
 
-@Composable
-fun TaskButton(onClick: () -> Unit) {
     Button(
         onClick = onClick
     ) {
-        Text(stringResource(R.string.button_add_task))
+        Text(
+            stringResource(R.string.button_add_task_label) //button label
+        )
     }
 }
 
+//Composable for an individual task item (Checkbox, Text, Delete button).
 @Composable
-fun TaskInformation(task: Task) {
+fun TaskItem(
+        task: Task
+) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
     ) {
         Text(
-            text = stringResource(id = task.taskDescription), //displays taskDescription text.
+            text = task.taskDescription, //displays taskDescription text.
             modifier = Modifier
                 .padding(8.dp)
             )
+
+//        //delete icon button
+//        IconButton(
+//            onClick = onDelete
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.Delete,
+//                contentDescription = "Remove Task"
+//            )
+//        }
     }
 }
 
+//Composable for displaying the list of tasks.
 @Composable
 fun TaskList(
         taskList: List<Task>,
@@ -133,7 +163,7 @@ fun TaskList(
 ) {
     LazyColumn(modifier = Modifier) {
         items(taskList) { task ->
-            TaskInformation(
+            TaskItem(
                 task = task
             )
         }
@@ -150,6 +180,6 @@ fun TaskList(
 @Composable
 fun GreetingPreview() {
     TaskManagerTheme {
-        TaskManagerLayout()
+        MainScreen()
     }
 }

@@ -7,7 +7,7 @@
     <string name="task_4">Go to class</string>
     <string name="task_5">Feed the cat</string>
 
-    <string name="text_field_label">Enter task</string>
-    <string name="button_add_task">Add Task</string>
+    <string name="text_field_enter_task_label">Enter task</string>
+    <string name="button_add_task_label">Add Task</string>
 
 </resources>
