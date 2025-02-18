@@ -17,7 +17,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -93,7 +96,8 @@ fun MainScreen() {
 
         Row() {
             TaskList(
-                taskList = taskList //Datasource().loadTasks() //display task list
+                taskList = taskList, //Datasource().loadTasks() //display task list
+                onDelete = { task -> taskList.remove(task) } //removes task from taskList
             )
         }
     }
@@ -132,7 +136,8 @@ fun TaskInputField(
 //Composable for an individual task item (Checkbox, Text, Delete button).
 @Composable
 fun TaskItem(
-        task: Task
+        task: Task,
+        onDelete: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
@@ -143,15 +148,15 @@ fun TaskItem(
                 .padding(8.dp)
             )
 
-//        //delete icon button
-//        IconButton(
-//            onClick = onDelete
-//        ) {
-//            Icon(
-//                imageVector = Icons.Filled.Delete,
-//                contentDescription = "Remove Task"
-//            )
-//        }
+        //delete icon button
+        IconButton(
+            onClick = onDelete
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Delete,
+                contentDescription = "Remove Task"
+            )
+        }
     }
 }
 
@@ -159,12 +164,14 @@ fun TaskItem(
 @Composable
 fun TaskList(
         taskList: List<Task>,
+        onDelete: (Task) -> Unit,
         modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = Modifier) {
         items(taskList) { task ->
             TaskItem(
-                task = task
+                task = task,
+                onDelete = { onDelete(task) }
             )
         }
     }
