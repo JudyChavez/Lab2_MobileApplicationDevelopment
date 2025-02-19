@@ -174,7 +174,7 @@ fun TaskInputField(
 
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(Color.Magenta)
+        colors = ButtonDefaults.buttonColors(Color.Magenta) //sets "Add Task" button background color.
     ) {
         Text(
             stringResource(R.string.button_add_task_label) //button label
@@ -200,14 +200,14 @@ fun TaskItem(
             .background(backgroundCompletedTask)
     ) {
 
-        //checkbox icon original
+        //a Checkbox to mark the task as completed.
         Checkbox(
             checked = task.checkboxIsCompleted,
             onCheckedChange = { isChecked -> onCheckboxChange(isChecked) }
         )
 
 
-        //description
+        //Text element displaying the task description.
         Text(
             text = task.taskDescription, //displays taskDescription text.
             modifier = Modifier
@@ -217,7 +217,7 @@ fun TaskItem(
         //horizontal spacer, pushes delete button to far right.
         Spacer(modifier = Modifier.weight(1f))
 
-        //delete icon button
+        //delete icon (IconButton) to remove a task.
         IconButton(
             onClick = onDelete
         ) {
@@ -237,6 +237,7 @@ fun TaskList(
         onCheckboxChange: (Task, Boolean) -> Unit,
         modifier: Modifier = Modifier
 ) {
+    //A vertically scrolling list (LazyColumn) of tasks where each task has: Checkbox, Text, IconButton.
     LazyColumn(modifier = Modifier) {
         items(taskList) { task ->
             TaskItem(
@@ -244,7 +245,7 @@ fun TaskList(
                 onDelete = { onDelete(task) },
                 onCheckboxChange = { isChecked -> onCheckboxChange(task, isChecked) },
                 modifier = modifier
-                    .padding(8.dp)
+                    .padding(8.dp)  //adds spacing (8dp) between list items.
             )
         }
     }
