@@ -24,21 +24,21 @@ var taskIdCounter = 0 //initializes id counter
 class Datasource() {
     fun loadTasks(): List<Task> {
         return mutableStateListOf<Task>(
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 1", false),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 2", false),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 3", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 4", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 5", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 6", false),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 7", false),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 8", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 9", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 10", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 11", false),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 12", false),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 13", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 14", true),
-            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 15", true)
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 1", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 2", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 3", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 4", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 5", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 6", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 7", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 8", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 9", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 10", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 11", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 12", false),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 13", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 14", true),
+//            Task(id = taskIdCounter++, taskDescription = "Datasource - Test 15", true)
 
         )
     }
